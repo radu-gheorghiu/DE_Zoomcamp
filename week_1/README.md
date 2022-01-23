@@ -21,3 +21,8 @@ Essential steps for building and running a container
 - `docker run -it test:pandas 2022-01-12` - is an example of a docker command that can be executed to run the container and also pass it a set of arguments for execution
 
 - `docker container prune` - from time to time, it might be a good idea to run this command to remove all stopped containers, since every execution of `docker run` will cause a NEW container to be initialized
+
+## <u>Ingesting data into PostgreSQL in Docker container</u>
+- docker compose is a way to run multiple Docker images
+- running a container with PostgreSQL is as simple as running the command in [`docker_run_cmd.txt`](./docker_run_cmd.txt)
+- 

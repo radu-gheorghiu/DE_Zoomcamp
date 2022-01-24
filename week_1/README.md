@@ -28,19 +28,26 @@ Essential steps for building and running a container
 - `docker container prune` - from time to time, it might be a good idea to run this command to remove all stopped containers, since every execution of `docker run` will cause a NEW container to be initialized
 
 ## 2. <u>Ingesting data into PostgreSQL in Docker container</u>
+
 - docker compose is a way to run multiple Docker images
-- running a container with PostgreSQL is as simple as running the command in [<span style="color:yellow">docker_run_cmd.txt</span>](./docker_run_cmd.txt)
-- connecting to the PostgreSQL database can be done through a cmd line <span style="color:orange">**pgcli**</span> and through a similar command: `pgcli -h localhost -p 5432 -u root -d ny_taxi`
+- running a container with PostgreSQL is as simple as running the command in [<span style="color:yellow">postgresql_docker_run_cmd.bat</span>](./postgresql_docker_run_cmd.bat)
+- connecting to the PostgreSQL database can be done through a cmd line <span style="color:orange">**pgcli**</span> and through a similar command: 
+
+        pgcli -h localhost -p 5432 -u root -d ny_taxi
+
 - we will ingest data for NYC Yellow Taxi rides from [NYC.gov](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page) website and download [this .CSV file](https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2021-01.csv)
 - the dataset has a [Data Dictionary](https://www1.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_yellow.pdf), explaining what each column means and what type of data is stored
 - taxi rides in the main dataset refer to a pick-up and drop-off location, which is replaced with an ID. The main table with lookup values for pick-up and drop-off can be [downloaded from here](https://s3.amazonaws.com/nyc-tlc/misc/taxi+_zone_lookup.csv)
 - for a detailed process of ingesting the data into the PostgreSQL database, have a look at the [<span style="color:yellow">test_notebook.ipynb</span>](test_notebook.ipynb) file
 
 ## 3. <u>Connecting pgAdmin to Postgresql</u>
-- in order to run pgAdmin in a Docker container, we can use a command similar to the one in [<span style="color:yellow">pgAdmin_run_cmd.txt</span>](pgAdmin_run_cmd.txt)
+
+- in order to run pgAdmin in a Docker container, we can use a command similar to the one in [<span style="color:yellow">pgAdmin_run_cmd.bat</span>](pgAdmin_run_cmd.bat)
 - because our database's server runs on "localhost" which is relative to the container it runs in, we need to expose the database server in order to connect to it, from pgAdmin. In order to do that, we will have to create a network in Docker and connect the two.
 - In order to create the network we will have to run `docker network create <network-name>` 
-    - ex: `docker network create pg-network`
+    
+        Ex: docker network create pg-network
+
 - then we have to expand the docker run commands and add the network in their definition and also a named-identifier for each service/container
 
     ![](./imgs/pg_network_info.PNG)
@@ -49,3 +56,19 @@ Essential steps for building and running a container
     ![](./imgs/how_to_connect_pgAdmin.PNG)
 
 ## 4. <u>Dockerizing the Ingestion script</u>
+
+- we can use the code in the already written Jupyter Notebook to generate the script that inputs data to PostgreSQL. In order to convert the notebook to a Python script, we can open a cmd line and run 
+        
+        jupyter nbconvert --to=script test_notebook.ipynb
+
+- we will need to manually cleanup the file, but it contains all the Python code, which can be found in [<span style="color:yellow">data_ingestion.py</span>](data_ingestion.py)
+- after creating the pipeline code in the Python file, we will have to run the file using a command like:
+    
+        python data_ingestion.py \
+            --user=root \
+            --password=root \
+            --host=localhost \
+            --port=5432 \
+            --database=ny_taxi \
+            --table=yellow_taxi_trips \
+            --csv_url="https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2021-01.csv"

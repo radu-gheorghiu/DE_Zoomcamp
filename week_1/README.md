@@ -45,6 +45,7 @@ Essential steps for building and running a container
 
     ![](./imgs/pg_network_info.PNG)
 - after starting both containers, all we have to do is go to localhost:8080 to access pgAdmin, create a server with the following config and connect to it
-![](./imgs/how_to_connect_pgAdmin.PNG)
+
+    ![](./imgs/how_to_connect_pgAdmin.PNG)
 
 ## 4. <u>Dockerizing the Ingestion script</u>

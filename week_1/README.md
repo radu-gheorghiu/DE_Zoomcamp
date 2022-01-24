@@ -6,6 +6,11 @@ This repository contains the notes and source code for the Data Engineering Zoom
 
 Goal for week 1 is to setup a GCP environment, learn basics of Docker, run PostgreSQL in a docker container and execute some queries on the database running in the container
 
+## Prerequisites
+You need to setup your own Python anaconda environment and activate it. Alternatively, you can just install Python on your machine, directly, if you don't have it already.
+
+Then, you must install pip, if you don't have it already and run `pip install -r requirements.txt`, that will go over the [requirements.txt](../requirements.txt) file and install all dependencies.
+
 ## <u>Docker</u>
 
 Essential steps for building and running a container
@@ -25,4 +30,8 @@ Essential steps for building and running a container
 ## <u>Ingesting data into PostgreSQL in Docker container</u>
 - docker compose is a way to run multiple Docker images
 - running a container with PostgreSQL is as simple as running the command in [`docker_run_cmd.txt`](./docker_run_cmd.txt)
-- 
+- connecting to the PostgreSQL database can be done through a cmd line <span style="color:orange">**pgcli**</span> and through a similar command: `pgcli -h localhost -p 5432 -u root -d ny_taxi`
+- we will ingest data for NYC Yellow Taxi rides from [NYC.gov](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page) website and download [this .CSV file](https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2021-01.csv)
+- the dataset has a [Data Dictionary](https://www1.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_yellow.pdf), explaining what each column means and what type of data is stored
+- taxi rides in the main dataset refer to a pick-up and drop-off location, which is replaced with an ID. The main table with lookup values for pick-up and drop-off can be [downloaded from here](https://s3.amazonaws.com/nyc-tlc/misc/taxi+_zone_lookup.csv)
+- for a detailed process of ingesting the data into the PostgreSQL database, have a look at the [<span style="color:yellow">test_notebook.ipynb</span>](week_1/test_notebook.ipynb) file

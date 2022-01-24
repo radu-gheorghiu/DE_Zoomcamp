@@ -34,4 +34,4 @@ Essential steps for building and running a container
 - we will ingest data for NYC Yellow Taxi rides from [NYC.gov](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page) website and download [this .CSV file](https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2021-01.csv)
 - the dataset has a [Data Dictionary](https://www1.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_yellow.pdf), explaining what each column means and what type of data is stored
 - taxi rides in the main dataset refer to a pick-up and drop-off location, which is replaced with an ID. The main table with lookup values for pick-up and drop-off can be [downloaded from here](https://s3.amazonaws.com/nyc-tlc/misc/taxi+_zone_lookup.csv)
-- for a detailed process of ingesting the data into the PostgreSQL database, have a look at the [<span style="color:yellow">test_notebook.ipynb</span>](week_1/test_notebook.ipynb) file
+- for a detailed process of ingesting the data into the PostgreSQL database, have a look at the [<span style="color:yellow">test_notebook.ipynb</span>](test_notebook.ipynb) file

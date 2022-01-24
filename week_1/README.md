@@ -40,6 +40,16 @@ Essential steps for building and running a container
 - taxi rides in the main dataset refer to a pick-up and drop-off location, which is replaced with an ID. The main table with lookup values for pick-up and drop-off can be [downloaded from here](https://s3.amazonaws.com/nyc-tlc/misc/taxi+_zone_lookup.csv)
 - for a detailed process of ingesting the data into the PostgreSQL database, have a look at the [<span style="color:yellow">test_notebook.ipynb</span>](test_notebook.ipynb) file
 
+---
+## PRO TIP (not course related):
+If like me, you accidentally commited a very large file (>100mb) in a previous commit and you can't push your changes to Github, you're now stuck. But, there's a solution. You can remove the file from the previous commit using this command:
+
+        git filter-branch --index-filter "git rm -rf --cached --ignore-unmatch path_to_file" HEAD
+
+You're welcome.
+
+---
+
 ## 3. <u>Connecting pgAdmin to Postgresql</u>
 
 - in order to run pgAdmin in a Docker container, we can use a command similar to the one in [<span style="color:yellow">pgAdmin_run_cmd.bat</span>](pgAdmin_run_cmd.bat)

@@ -30,7 +30,7 @@ Essential steps for building and running a container
 ## 2. <u>Ingesting data into PostgreSQL in Docker container</u>
 
 - docker compose is a way to run multiple Docker images
-- running a container with PostgreSQL is as simple as running the command in [<span style="color:yellow">postgresql_docker_run_cmd.bat</span>](./postgresql_docker_run_cmd.bat)
+- running a container with PostgreSQL is as simple as running the command in [<span style="color:yellow">dckr_postgresql_server_run.bat</span>](./dckr_postgresql_server_run.bat)
 - connecting to the PostgreSQL database can be done through a cmd line <span style="color:orange">**pgcli**</span> and through a similar command: 
 
         pgcli -h localhost -p 5432 -u root -d ny_taxi
@@ -52,7 +52,7 @@ You're welcome.
 
 ## 3. <u>Connecting pgAdmin to Postgresql</u>
 
-- in order to run pgAdmin in a Docker container, we can use a command similar to the one in [<span style="color:yellow">pgAdmin_run_cmd.bat</span>](pgAdmin_run_cmd.bat)
+- in order to run pgAdmin in a Docker container, we can use a command similar to the one in [<span style="color:yellow">dckr_pgAdmin_run.bat</span>](dckr_pgAdmin_run.bat)
 - because our database's server runs on "localhost" which is relative to the container it runs in, we need to expose the database server in order to connect to it, from pgAdmin. In order to do that, we will have to create a network in Docker and connect the two.
 - In order to create the network we will have to run `docker network create <network-name>` 
     
@@ -82,3 +82,24 @@ You're welcome.
             --database=ny_taxi \
             --table=yellow_taxi_trips \
             --csv_url="https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2021-01.csv"
+
+- now that we have tested our pipeline data ingestion script, we will need to dockerize it. We will have to first update the Dockerfile and we will <u>**make sure to change the pipeline file which processes the data**</u>. Then add commands to install the necessary Python libraries for connecting to Postgresql. The Dockerfile will look something like:
+
+        FROM python:3.9
+
+        RUN pip install pandas sqlalchemy psycopg2
+
+        WORKDIR /app
+        COPY data_ingestion.py data_ingestion.py
+
+        ENTRYPOINT ["python", "data_ingestion.py"]
+
+- with the new definition of the Dockerfile, we now have to build the image for this new container by using the following command
+
+        docker build -t taxi_ingest:v001 .
+
+- the output should look something like below 
+
+    ![](./imgs/docker_build_new_image.PNG)
+
+- to run the docker file, we can just run the container and pass it the parameters

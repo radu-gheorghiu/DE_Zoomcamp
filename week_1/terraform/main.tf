@@ -26,7 +26,7 @@ resource "google_storage_bucket" "data-lake-bucket" {
     storage_class = var.storage_class
     uniform_bucket_level_access = true
 
-    versioning = {
+    versioning {
         enabled = true
     }
 

@@ -140,4 +140,15 @@ You're welcome.
 
 ## 7. <u>Creating GCP Infrastructure with Terraform</u>
 
-- 
+- essentially we went over the structure of the `main.tf` and `variables.tf` files in Terraform and we ran the main commands: 
+        
+        terraform init
+        terraform plan
+        terraform apply
+        terraform destroy
+
+- full explainable tutorial can be viewed in the video below (click it)
+
+  [![GCP_Infra_and_Terraform](https://img.youtube.com/vi/dNkEgO-CExg/0.jpg)](https://www.youtube.com/watch?v=v=dNkEgO-CExg "Click play")
+
+## 8. <u>Setting up Cloud VM + SSH on GCP</u>

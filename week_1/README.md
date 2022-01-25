@@ -130,3 +130,16 @@ You're welcome.
 - in order to shutdown everything, you need to run
 
         docker-compose down
+
+## 6. <u>Intro to Terraform & GCP Pre-requisites</u>
+- everything is very well explained in this video (click it)
+
+  [![Terraform_and_GCP_Pre-requisites](https://img.youtube.com/vi/Hajwnmj0xfQ/0.jpg)](https://www.youtube.com/watch?v=Hajwnmj0xfQ "Click play")
+
+  https://www.youtube.com/watch?v=Hajwnmj0xfQ
+
+  <iframe width="560" height="315"
+src="https://www.youtube.com/watch?v=Hajwnmj0xfQ" 
+frameborder="0" 
+allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+allowfullscreen></iframe>

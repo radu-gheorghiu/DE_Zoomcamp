@@ -114,3 +114,19 @@ You're welcome.
                 --database=ny_taxi ^
                 --table=yellow_taxi_trips ^
                 --csv_url="https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2021-01.csv"
+
+## 5. <u>Running Postgresql and pgAdmin with Docker-Compose</u>
+- you can create all the docker containers in a single definition by using docker-compose, instead of having different definitions of containers ran in different terminal windows
+- another benefit of running everything in a single docker-compose file is that the network is automatically created so that containers defined in the same docker-compose file can talk to eachother and can be referenced by their name
+- so, redefining the entire container structure can be found in [<span style="color:yellow">docker-compose.yaml</span>](docker-compose.yaml)
+- in order to run the container configuration from docker-compose you need to run
+        
+        docker-compose up
+
+- if you want to start the containers but also continue to have access to the terminal, you can run in **detach mode**
+
+        docker-compose up -d
+
+- in order to shutdown everything, you need to run
+
+        docker-compose down

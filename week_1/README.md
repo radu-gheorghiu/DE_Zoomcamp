@@ -116,6 +116,7 @@ You're welcome.
                 --csv_url="https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2021-01.csv"
 
 ## 5. <u>Running Postgresql and pgAdmin with Docker-Compose</u>
+
 - you can create all the docker containers in a single definition by using docker-compose, instead of having different definitions of containers ran in different terminal windows
 - another benefit of running everything in a single docker-compose file is that the network is automatically created so that containers defined in the same docker-compose file can talk to eachother and can be referenced by their name
 - so, redefining the entire container structure can be found in [<span style="color:yellow">docker-compose.yaml</span>](docker-compose.yaml)
@@ -132,14 +133,11 @@ You're welcome.
         docker-compose down
 
 ## 6. <u>Intro to Terraform & GCP Pre-requisites</u>
+
 - everything is very well explained in this video (click it)
 
   [![Terraform_and_GCP_Pre-requisites](https://img.youtube.com/vi/Hajwnmj0xfQ/0.jpg)](https://www.youtube.com/watch?v=Hajwnmj0xfQ "Click play")
 
-  https://www.youtube.com/watch?v=Hajwnmj0xfQ
+## 7. <u>Creating GCP Infrastructure with Terraform</u>
 
-<p align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Hajwnmj0xfQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</p>
-
-here
+- 

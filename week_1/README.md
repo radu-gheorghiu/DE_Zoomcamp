@@ -102,4 +102,15 @@ You're welcome.
 
     ![](./imgs/docker_build_new_image.PNG)
 
-- to run the docker file, we can just run the container and pass it the parameters
+- to run the docker file, we can just run the container and pass it the parameters, just like you would pass the parameters to the Python file. **Make sure you specify the network parameter when running the container so that it will have access to PostgreSQL**
+
+        docker run -it ^
+                --network=pg-network ^
+                taxi_ingest:v001 ^
+                --user=root ^
+                --password=root ^
+                --host=pg-database ^
+                --port=5432 ^
+                --database=ny_taxi ^
+                --table=yellow_taxi_trips ^
+                --csv_url="https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2021-01.csv"

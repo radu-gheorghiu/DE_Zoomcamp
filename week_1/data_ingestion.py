@@ -29,6 +29,9 @@ def main(params):
 
     csv_name = './data/output.csv'
 
+    print('CWD', os.getcwd())
+    print('LISTDIR:', os.listdir())
+
     print('Downloading dataset')
     df = pd.read_csv(csv_url)
 
@@ -36,9 +39,11 @@ def main(params):
     print('Saving temp dataset to data folder')
     df.to_csv(csv_name, index=False)
 
+    print('Connecting to Postgresql')
     engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{database}')
     engine.connect()
     
+    print('Changing datatypes for Timestamp columns')
     df = df.astype({
         'tpep_pickup_datetime': 'datetime64'
         , 'tpep_dropoff_datetime': 'datetime64'
@@ -50,6 +55,7 @@ def main(params):
 
     df.head(0).to_sql(name=table_name, con=engine, if_exists='replace')
 
+    print('INGESTING Data!')
     while True:
         
         try:

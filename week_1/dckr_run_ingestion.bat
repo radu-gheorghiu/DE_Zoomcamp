@@ -1,7 +1,9 @@
-docker run taxi_ingest:v001 ^
+docker run -it ^
+    --network=pg-network ^
+    taxi_ingest:v001 ^
     --user=root ^
     --password=root ^
-    --host=localhost ^
+    --host=pg-database ^
     --port=5432 ^
     --database=ny_taxi ^
     --table=yellow_taxi_trips ^

@@ -2,6 +2,7 @@ import pandas as pd
 from time import time
 from sqlalchemy import create_engine
 import argparse
+import os
 
 parser = argparse.ArgumentParser(description='Ingest CSV data to PostgreSQL')
 
@@ -9,25 +10,35 @@ parser = argparse.ArgumentParser(description='Ingest CSV data to PostgreSQL')
 
 def main(params):
 
-    user = params.user
-    password = params.password
-    host = params.host
-    port = params.port
-    database = params.database
-    table_name = params.table
-    csv_url = params.csv_url
+    if params.user is None:
+        user = 'root'
+        password = 'root'
+        host = 'localhost'
+        port = 5432
+        database = 'ny_taxi'
+        table_name = 'yellow_taxi_trips'
+        csv_url = 'https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2021-01.csv'
+    else:
+        user = params.user
+        password = params.password
+        host = params.host
+        port = params.port
+        database = params.database
+        table_name = params.table
+        csv_url = params.csv_url
 
     csv_name = './data/output.csv'
 
     print('Downloading dataset')
     df = pd.read_csv(csv_url)
 
+    # Make sure to use index=False because pandas automatically adds an additional INDEX column
     print('Saving temp dataset to data folder')
-    df.to_csv(csv_name)
+    df.to_csv(csv_name, index=False)
 
     engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{database}')
     engine.connect()
-
+    
     df = df.astype({
         'tpep_pickup_datetime': 'datetime64'
         , 'tpep_dropoff_datetime': 'datetime64'

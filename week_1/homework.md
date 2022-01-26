@@ -228,3 +228,83 @@ How many taxi trips were there on January 15?
 Consider only trips that started on January 15.
 
 ## <u>Answer</u>:
+    
+    select count(*)
+    from yellow_taxi_trips
+    where cast(tpep_pickup_datetime as date) = '2021-01-15';
+
+    Result: 53024
+
+## Question 4. Largest tip for each day
+
+Find the largest tip for each day. On which day it was the largest tip in January?
+
+Use the pick up time for your calculations.
+
+(note: it's not a typo, it's "tip", not "trip")
+
+
+## <u>Answer</u>:
+
+    select tpep_pickup_datetime
+    from yellow_taxi_trips
+    where tip_amount = (
+        select max(tip_amount)
+        from yellow_taxi_trips
+    );
+
+    Result: "2021-01-20 11:22:05"
+
+## Question 5. Most popular destination
+
+What was the most popular destination for passengers picked up in central park on January 14?
+
+Use the pick up time for your calculations.
+
+Enter the zone name (not id). If the zone name is unknown (missing), write "Unknown".
+
+## <u>Answer</u>:
+
+    select tzl."Zone"
+    from yellow_taxi_trips as ytt
+        inner join taxi_zone_lookup as tzl
+            on ytt."DOLocationID" = tzl."LocationID"
+    where ytt.tpep_pickup_datetime >= '2021-01-14' and ytt.tpep_pickup_datetime < '2021-01-15'
+    group by tzl."Zone"
+    order by count(tzl."Zone") desc
+    limit 1
+
+    Result: "Upper East Side North"
+
+## Question 6. Most expensive locations
+
+What's the pickup-dropoff pair with the largest average price for a ride (calculated based on total_amount)?
+
+Enter two zone names separated by a slash
+
+For example:
+
+"Jamaica Bay / Clinton East"
+
+If any of the zone names are unknown (missing), write "Unknown". For example, "Unknown / Clinton East".
+
+## <u>Answer</u>:
+
+    select
+        trip
+        , avg(total_amount) as trip_average
+    from 
+    (
+        select CONCAT(pick_tzl."Zone", ' / ' , CASE WHEN dest_tzl."Zone" IS NULL THEN 'Unknown' ELSE dest_tzl."Zone" END) as trip
+            , ytt."total_amount"
+        from yellow_taxi_trips as ytt
+            inner join taxi_zone_lookup as dest_tzl
+                on ytt."DOLocationID" = dest_tzl."LocationID"
+            inner join taxi_zone_lookup as pick_tzl
+                on ytt."PULocationID" = pick_tzl."LocationID"
+    ) as tmp
+    group by trip
+    order by trip_average desc
+    limit 1
+
+    Result: "Alphabet City / Unknown", 2292.4

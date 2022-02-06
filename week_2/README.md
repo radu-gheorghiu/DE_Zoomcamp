@@ -53,3 +53,14 @@ The use cases for a data warehouse are generally batch reporting and BI reportin
 ---
 
 ## 2. [<u>Workflow orchestration</u>](https://www.youtube.com/watch?v=0yK7LXwYeD0)
+
+- Taken example what we have done in the previous week, where we had the [ingest_data.py](../week_1/data_ingestion.py)
+- We had our pipeline script in a single Python file, deployed in a container where this pipeline file executed more steps (accesses the web, downloads .csv file, processes it with a script)
+
+    ![Basic Pipeline](./imgs/basic_pipeline.PNG)
+
+- If there is ever an issue with the script (ex: internet is cut off), our entire pipeline script fails
+- Ideally, we want to split all of these steps into their own scripts, so that we have more control over them and can re-execute them, if necessary
+- It would be better if we reorganized our pipeline and parametrized each script, like in the below diagram
+
+    ![Improved Pipeline](./imgs/adjusted_pipeline.PNG)

@@ -64,3 +64,14 @@ The use cases for a data warehouse are generally batch reporting and BI reportin
 - It would be better if we reorganized our pipeline and parametrized each script, like in the below diagram
 
     ![Improved Pipeline](./imgs/adjusted_pipeline.PNG)
+
+- We can improve this architecture by instead saving the data as a .csv file, we sill save it as Parquet format, which is more efficient way of storing data on disk
+
+    ![Super-improved Pipeline](./imgs/improved_pipeline.PNG)
+
+- There are different tools for workflow orchestration
+    - Luigi
+    - Apache Airflow (we will use it in the course)
+    - Prefect
+
+## 3. [<u>Setup Airflow Environment with Docker-Compose</u>](https://www.youtube.com/watch?v=lqDMzReAtrw)
